@@ -1,0 +1,7 @@
+ body {
+  max-width: max-content;
+  max-height: max-content;
+  margin: 0 auto;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(13, 238, 224, 1), rgba(21, 58, 21, 0.49));
+}

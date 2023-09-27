@@ -1,0 +1,96 @@
+@media only screen and (min-width: 768px){
+    .form{
+        height: 70vh;
+        width: 70vw;
+    }
+    .input{
+        width: 90%;
+        height: 7vh;
+        padding-left: 5%;
+    }
+    .logo{
+        width: 90%;
+    }
+    
+    h2{
+        font-size: 30px;
+    }
+    
+    .input h4{
+        padding-top: 3%;
+        font-size: 20px;
+    }
+
+    .confirm-button {
+        width: 100%;
+        height: 30%;
+        padding-top: 15%;
+    }
+    
+}
+
+@media only screen and (min-width: 992px){
+    .form{
+        height: 70vh;
+        width: 40vw;
+    }
+    .input{
+        width: 70%;
+        padding-left: 15%;
+    }
+    .logo{
+        width: 70%;
+    }
+    .input h4 {
+        padding-top: 0%;
+        font-size: 15px;
+    }
+    .confirm-button {
+        width: 70%;
+        height: 30%;
+        margin: 0;
+        padding: 0;
+        padding-left: 15%;
+        padding-top: 5%;
+    }
+}
+
+.input {
+    padding-bottom: 3vh;
+    align-content: center;
+}
+
+.logo-div {
+    padding: initial;
+    margin-top: 0;
+    padding-bottom: 4%;
+}
+
+.logo {
+    height: 20vh;
+    position: relative;
+}
+
+h2 {
+    font-size: 25px;
+    color: #FFFFFF;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h3 {
+    font-size: 30px;
+    font-weight: bolder;
+    color: #000000;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    margin-top: 0;
+}
+
+.input h4 {
+    text-align: right;
+}
+
+a{
+    color: black;
+    text-decoration: dashed;
+}
