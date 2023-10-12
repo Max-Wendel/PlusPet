@@ -1,43 +1,29 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { BaseSelectStyles } from './style';
+import Select from 'react-select';
 import BaseSelectProps from './types';
+import { useField } from 'usetheform';
+import "./style.css";
+import { defaultStyle, inputStyle } from './utils';
 
 export default function BaseSelect({
-    description,
     options,
-    id,
-    placeholder
+    name,
+    placeholder,
+    defaultOption,
+    isInputStyle,
+    isClearable
 }:BaseSelectProps) {
-    const [option, setOption] = React.useState('');
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setOption(event.target.value as string);
-    };
+    const {value, setValue} = useField({type: 'custom', name})
+    const onChange = (value:any) => setValue(value);
 
     return (
-        <Box>
-                <Select
-                    style={BaseSelectStyles}
-                    id={id}
-                    value={option}
-                    displayEmpty
-                    onChange={handleChange}
-                    placeholder={placeholder}
-                >
-                    <MenuItem value="">
-                        <em>{description}</em>
-                    </MenuItem>
-                    {
-                        options.map(opt => {
-                            return (
-                                <MenuItem value={opt.value} key={opt.id}>{opt.description}</MenuItem>
-                            )
-                        })
-                    }
-                </Select>
-        </Box>
+        <Select 
+            defaultValue={defaultOption} 
+            placeholder={placeholder} 
+            options={options} 
+            onChange={onChange} 
+            value={value} 
+            isClearable={isClearable}
+            styles={ isInputStyle ? inputStyle : defaultStyle}
+            />
     );
 }

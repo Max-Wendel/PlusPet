@@ -1,0 +1,65 @@
+@media only screen and (min-width: 768px){
+    .user-info{
+        margin-left: 50px;
+        margin-right: 50px;
+        padding-left: 20%;
+    }
+    .logout-button{
+        margin-right: 0;
+        padding-left: 20%;
+    }
+}
+
+@media only screen and (min-width: 992px){
+    .user-info{
+        margin-left: 0;
+        padding-left: 60%;
+        margin-right: 0;
+    }
+    .logout-button{
+        margin-right: 0;
+        margin-left: 0;
+        padding-left: 15%;
+    }
+}
+
+.app-bar{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    background-color: #01FFB2;
+}
+
+.logout-button{
+    display: flex;
+    float: left;
+    position: relative;
+}
+
+.logo{
+    display: flex;
+    position: relative;
+    height: 80px;
+    width: 150px;
+    margin: 0;
+}
+
+.content{
+    display: flex;
+    position: absolute;
+    min-width: 80vw;
+    min-height: 88vh;
+    margin: 0;
+    left: 12%;
+    top: 9%;
+    /* background-color: blueviolet; */
+}
+
+.user-info{
+    display: flex;
+    float: left;
+    position: relative;
+}

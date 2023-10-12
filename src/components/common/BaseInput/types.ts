@@ -1,9 +1,12 @@
+import { Theme } from "@emotion/react";
+import { SxProps } from "@mui/material";
+
 export default interface BaseInputProps {
     id?: string;
-    disabled: boolean;
-    name?: string;
+    disabled?: boolean;
+    name: string;
     error?: boolean;
-    placeholder?: string;
+    placeholder: string;
     color?: 'error' | 'primary' | 'secondary' | 'info' | 'success' | 'warning';
     size: 'medium' | 'small';
     variant: 'outlined' | 'filled' | 'standard';
@@ -16,5 +19,5 @@ export default interface BaseInputProps {
     endAdornment?: JSX.Element;
     touched?: boolean;
     validators?: any;
-    onChange?: () => void
+    sx?:  SxProps<Theme>;
 }

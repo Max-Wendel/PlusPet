@@ -1,6 +1,8 @@
 export default interface BaseSelectProps {
-    options: any[],
-    id?: string,
-    placeholder?: string,
-    description: string
+    options: any[];
+    name?: string;
+    placeholder: string;
+    defaultOption?: any;
+    isInputStyle?: boolean | false;
+    isClearable?: boolean | false;
 }

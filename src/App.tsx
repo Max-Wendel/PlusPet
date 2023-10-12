@@ -1,10 +1,13 @@
 import './App.css'
-import LoginPage from './components/auth';
+import ServiceListPage from './components/Pages/ServiceList';
+import NavigationBar from './components/common/NavigationBar';
 
 function App() {
   return (
     <div>
-      <LoginPage/>
+      <NavigationBar>
+          <ServiceListPage/>
+      </NavigationBar>
     </div>
   )
 }

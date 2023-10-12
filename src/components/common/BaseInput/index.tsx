@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import BaseInputProps from "./types";
-import { BaseInputStyles } from "./style";
 import { useField, useValidation } from "usetheform";
+import { BaseInputStyles } from "./style";
 
 export default function BaseInput(
     {
@@ -16,10 +16,10 @@ export default function BaseInput(
         placeholder,
         required,
         id,
+        sx,
         name,
         touched,
         validators,
-        onChange
     }: BaseInputProps
 ) {
     const [status, validation] = useValidation(validators);
@@ -34,7 +34,6 @@ export default function BaseInput(
 
     return (
         <TextField
-            onChange={onChange}
             id={id}
             name={name}
             disabled={disabled}
@@ -49,6 +48,7 @@ export default function BaseInput(
             placeholder={placeholder}
             required={required}
             style={BaseInputStyles}
+            sx={sx}
             touched={touched}
             {...props}
         />
