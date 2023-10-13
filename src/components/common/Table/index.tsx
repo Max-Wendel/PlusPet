@@ -74,6 +74,7 @@ export default function BaseTable({
     const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
 
     const handleChangePage = (event: unknown, newPage: number) => {
+        event? event:null;
         setPage(newPage);
     };
 
