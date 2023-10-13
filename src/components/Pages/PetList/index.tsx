@@ -40,7 +40,7 @@ export default function ServiceListPage() {
         setOpenToast(true)
     };
 
-    const handleCloseToat = () => {
+    const handleCloseToat = ()=>{
         setOpenToast(false)
     }
     return (
@@ -129,14 +129,14 @@ export default function ServiceListPage() {
                         <Grid item xs={12} alignContent={'center'}>
                             <Grid container>
                                 <Grid item xs={10}>
-                                    <Typography variant="h5">Lista de Serviços</Typography>
+                                    <Typography variant="h5">Lista de Pets</Typography>
                                 </Grid>
                                 <Grid item xs={2}>
                                     <Box sx={{ paddingTop: '5px' }}>
                                         <DashedButton disabled={false} onClick={openForm}>Agendar Serviço</DashedButton>
                                     </Box>
                                     <Box>
-                                        <Snackbar open={openToast} autoHideDuration={3000} onClose={handleCloseToat} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                                        <Snackbar open={openToast} autoHideDuration={3000} onClose={handleCloseToat} anchorOrigin={{vertical:'top',horizontal:'right'}}>
                                             <Alert onClose={handleCloseToat} severity="success" sx={{ width: '100%', backgroundColor: '#00FC22', color: 'white' }}>
                                                 Operação realizada com sucesso!
                                             </Alert>

@@ -1,14 +1,9 @@
 import './App.css'
-import ServiceListPage from './components/Pages/ServiceList';
-import NavigationBar from './components/common/NavigationBar';
+import Routes from './routes';
 
 function App() {
   return (
-    <div>
-      <NavigationBar>
-          <ServiceListPage/>
-      </NavigationBar>
-    </div>
+    <Routes />
   )
 }
 

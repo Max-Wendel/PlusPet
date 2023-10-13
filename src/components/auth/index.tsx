@@ -5,6 +5,7 @@ import logo from '../../assets/landscape_logo.svg';
 import DashedButton from '../common/DashedButton';
 import { Form } from 'usetheform';
 import LoginInput from '../common/LoginInput';
+import axios from 'axios';
 
 export default function ServerModal() {
   const LoginForm = styled(Paper)(({ theme }) => ({
@@ -19,7 +20,27 @@ export default function ServerModal() {
   }));
 
 
-  const onSubmit = (state: any) => console.log(state);
+  const onSubmit = (state: any) => {
+    console.log(state);
+    let config = {
+      headers:{
+        contentType: 'application/json',
+        accept: '*/*'
+      }
+    }
+    axios.post(
+      'http://localhost:8080/auth/login',
+      {
+        login: state.login, 
+        password: state.password
+      },
+      config
+      ).then((response) => {
+        console.log(response);
+      }, (error) => {
+        console.log(error);
+      });
+  }
   const required = (value: string) => { value && value.trim() !== "" ? undefined : "Required" };
 
   return (
@@ -34,7 +55,7 @@ export default function ServerModal() {
             <div className='input'>
               <LoginInput
                 id='login-username'
-                name='username'
+                name='login'
                 placeholder='Usuário'
                 validators={[required]}
               />

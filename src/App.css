@@ -9,17 +9,3 @@
 * {
   box-sizing: border-box;
 }
-
-.a{
-  float: left;
-}
-
-.b{
-  float: left;
-  position: relative;
-}
-
-.c{
-  float: left;
-  position: inherit;
-}

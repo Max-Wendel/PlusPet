@@ -8,34 +8,47 @@ import { AccountCircle } from '@mui/icons-material';
 import logo from '../../../assets/landscape_logo.svg';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import NavigationBarProps from './types';
 
 export default function NavigationBar({ children }: NavigationBarProps) {
-  const drawerWidth = 200;
-  const navigationOptions = ['Serviços', 'Pets', 'Tutores'];
+  const navigationOptions = [
+      {label: 'Serviços', path: '/'},
+      {label: 'Pets', path: '/pets'}, 
+      {label: 'Tutores', path: '/tutors'},
+  ];
 
   return (
     <>
       <div>
-        <AppBar elevation={0}>
+        <AppBar elevation={0} sx={{backgroundColor: '#01FFB2'}}>
           <Toolbar className="app-bar">
-            <div>
-              <img className='logo' src={logo} alt='Logo'></img>
-            </div>
-            <div className='user-info'>
-              <AccountCircle fontSize='large' sx={{ color: 'black' }} />
-              <Typography variant="overline" sx={{ fontSize: '16px', color: 'black' }}>
-                USERNAME
-              </Typography>
+            <Grid container direction={'row'} justifyContent={'center'} alignItems={'flex-start'}>
+              <Grid item xs={4}>
+                <div className='logo'>
+                  <img src={logo} alt='Logo'></img>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className='user-info'>
+                  <AccountCircle fontSize='large' sx={{ color: 'black' }} />
+                  <Typography variant="caption" sx={{ fontSize: '18px', color: 'black', alignItems: 'flex-start' }}>
+                    Julia Stephanie
+                  </Typography>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className="logout-button">
+                  <Button color="inherit">
+                    <Typography variant="button" sx={{ fontSize: '16px', color: 'black', fontWeight: 'bolder' }}>Sair</Typography>
+                    <ExitToAppIcon sx={{ color: 'black' }} fontSize='large' />
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
 
-            </div>
-            <div className="logout-button">
-              <Button color="inherit">
-                <Typography variant="button" sx={{ fontSize: '16px', color: 'black', fontWeight: 'bolder' }}>Sair</Typography>
-                <ExitToAppIcon sx={{ color: 'black' }} fontSize='large' />
-              </Button>
-            </div>
+
+
           </Toolbar>
         </AppBar>
       </div>
@@ -43,40 +56,23 @@ export default function NavigationBar({ children }: NavigationBarProps) {
         {children}
       </div>
       <div>
-        <Drawer
-          sx={{
-            width: drawerWidth,
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            zIndex: 0,
-            paddingTop: '10px',
-            overflow: 'scroll',
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              boxSizing: 'border-box',
-              backgroundColor: '#01FFB2',
-
-            },
-          }}
-          variant="permanent"
-          anchor="left"
+        <Box
+          className={'side-bar'}
         >
           <Toolbar />
           <List>
-            {navigationOptions.map((text) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
+            {navigationOptions.map((item) => (
+              <ListItem key={item.label} disablePadding>
+                <ListItemButton href={item.path}>
                   <ListItemIcon>
                     <ArrowRightIcon fontSize='large' />
                   </ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
-        </Drawer>
+        </Box>
       </div>
     </>
   );
