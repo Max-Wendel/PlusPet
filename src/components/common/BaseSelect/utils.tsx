@@ -3,22 +3,22 @@ export const inputStyle = {
         ...base,
         height: 50,
       }),
-    input: (provided: any, state: any) => ({
+    input: (provided: any) => ({
     ...provided,
     margin: '0px',
     }),
-    indicatorSeparator: (state: any) => ({
+    indicatorSeparator: () => ({
         display: 'none',
       }),
-    indicatorsContainer: (provided: any, state: any) => ({
+    indicatorsContainer: (provided: any) => ({
         ...provided,
         height: '45px',
     }),
-    dropdownIndicator: (provided: any, state: any)=>({
+    dropdownIndicator: (provided: any)=>({
         ...provided,
         color: 'black'
     }),
-    valueContainer: (provided: any, stat1: any)=>({
+    valueContainer: (provided: any)=>({
         ...provided,
         textAlign: 'start'
     })  
@@ -29,22 +29,22 @@ export const defaultStyle = {
         ...base,
         height: 30,
       }),
-    input: (provided: any, state: any) => ({
+    input: (provided: any) => ({
     ...provided,
     margin: '0px',
     }),
-    indicatorSeparator: (state: any) => ({
+    indicatorSeparator: () => ({
         display: 'none',
       }),
-    indicatorsContainer: (provided: any, state: any) => ({
+    indicatorsContainer: (provided: any) => ({
         ...provided,
         height: '35px',
     }),
-    dropdownIndicator: (provided: any, state: any)=>({
+    dropdownIndicator: (provided: any)=>({
         ...provided,
         color: 'black'
     }),
-    valueContainer: (provided: any, stat1: any)=>({
+    valueContainer: (provided: any)=>({
         ...provided,
         textAlign: 'start'
     })  
