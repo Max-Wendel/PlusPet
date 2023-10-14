@@ -14,7 +14,7 @@ export default function ServerModal() {
     textAlign: 'center',
     margin: 'auto',
     position: 'relative',
-    top: '10%',
+    top: '15%',
     color: theme.palette.text.secondary,
     borderRadius: '30px',
     backgroundColor: '#01FFB2'
@@ -51,7 +51,8 @@ export default function ServerModal() {
   const required = (value: string) => { value && value.trim() !== "" ? undefined : "Required" };
 
   return (
-    <Box sx={{ width: '100vw', height: '100vh' }}>
+    <Box className={'page'}>
+
       <Box>
         <Snackbar open={openToast} autoHideDuration={3000} onClose={handleCloseToat} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
           <Alert onClose={handleCloseToat} severity="error" sx={{ width: '100%', backgroundColor: '#FC3600', color: 'white' }}>
@@ -59,7 +60,7 @@ export default function ServerModal() {
           </Alert>
         </Snackbar>
       </Box>
-      <Grid container>
+
       <LoginForm className='form' elevation={10}>
         <Form onSubmit={onSubmit}>
           <div className='logo-div'>
@@ -95,7 +96,6 @@ export default function ServerModal() {
           </div>
         </Form>
       </LoginForm>
-      </Grid>
     </Box>
   );
 }
