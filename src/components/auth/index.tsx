@@ -1,6 +1,6 @@
 import './auth.css'
 import Box from '@mui/material/Box';
-import { Alert, Grid, Paper, Snackbar, styled } from '@mui/material';
+import { Alert, Paper, Snackbar, styled } from '@mui/material';
 import logo from '../../assets/landscape_logo.svg';
 import DashedButton from '../common/DashedButton';
 import { Form } from 'usetheform';
