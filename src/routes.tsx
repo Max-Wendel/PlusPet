@@ -10,8 +10,8 @@ const AplicationRoutes = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route Component={Services} path="/" />
-                <Route Component={Login} path="/auth" />
+                <Route Component={Services} path="/home" />
+                <Route Component={Login} path="/" />
                 <Route Component={Pets} path="/pets" />
                 <Route Component={Tutors} path="/tutors" />
                 <Route Component={ErrorPage} path="/"/>
