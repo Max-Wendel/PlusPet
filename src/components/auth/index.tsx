@@ -7,7 +7,6 @@ import { Form } from 'usetheform';
 import LoginInput from '../common/LoginInput';
 import instance from '../../axiosConfig';
 import React from 'react';
-import { redirect } from 'react-router-dom';
 
 export default function ServerModal() {
   const LoginForm = styled(Paper)(({ theme }) => ({
