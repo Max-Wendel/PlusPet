@@ -12,6 +12,7 @@
         padding-top: 2%;
     }
 
+
     .logo-div{
         width: 90%;
         height: 90%;
@@ -53,6 +54,10 @@
         width: 85%;
         padding-bottom: 5%;
     }
+    .logo{
+        width: 40vw;
+        height: 20vh;
+    }
     .input h4 {
         padding-top: 0%;
         padding-right: 5%;
@@ -63,6 +68,14 @@
     .confirm-button {
         width: 80%;
         height: 30%;
+        margin: 0;
+        padding: 0;
+        padding-left: 20%;
+        padding-top: 5%;
+    }
+    .confirm-button-back {
+        width: 80%;
+        height: 40%;
         margin: 0;
         padding: 0;
         padding-left: 20%;
@@ -81,4 +94,14 @@
     height: 100vh;
     width: 100vw;
     position: relative;
+}
+
+h4{
+    font-weight: bold;
+    color: rgb(1, 43, 22);
+}
+
+.logo{
+    max-width: 100%;
+    max-height: 90%;
 }

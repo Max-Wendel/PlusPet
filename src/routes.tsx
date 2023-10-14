@@ -3,7 +3,7 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Services from "./components/Pages/ServiceList";
 import Pets from "./components/Pages/PetList";
 import Tutors from "./components/Pages/TutorList";
-import Login from "./components/auth"
+import Login from "./components/Pages/Login"
 import ErrorPage from "./components/Pages/ErrorPage";
 
 const AplicationRoutes = () => {

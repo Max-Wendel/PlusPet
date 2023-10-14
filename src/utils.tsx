@@ -20,13 +20,15 @@ function createPetSample(
   return { id, pet_name, pet_tutor, specie, breed, gender };
 }
 
-function createTutorSample(
+export function createTutorSample(
   id: number,
   tutor_name: string,
   tutor_cpf: string,
   tutor_email: string,
+  birth_date: string,
+  archived: boolean
 ) {
-  return { id, tutor_name, tutor_cpf, tutor_email };
+  return { id, tutor_name, tutor_cpf, tutor_email, birth_date, archived };
 }
 
 function createPetOptionSample(
@@ -83,14 +85,6 @@ export const petRowsSample = [
   createPetSample(Math.random(), 'Luffy', 'Ednilson Soares Nascimento', 'Cachorro', 'Pinscher', 'male'),
 ];
 
-export const tutorRowsSample = [
-  createTutorSample(Math.random(), 'Lorenna Paulo Richa', '53356328794', 'lorenna.richa@geradornv.com.br'),
-  createTutorSample(Math.random(), 'Odileia Lacerda Vasgestian', '12486131710', 'odileia.vasgestian@geradornv.com.br'),
-  createTutorSample(Math.random(), 'Norberto Monnerat Soriano', '47555876973', 'norberto.soriano@geradornv.com.br'),
-  createTutorSample(Math.random(), 'Aldemar Mayerhofer Richa', '11132751381', 'aldemar.richa@geradornv.com.br'),
-  createTutorSample(Math.random(), 'Wallace Tolentino Lucas', '58739717739', 'wallace.lucas@geradornv.com.br'),
-];
-
 export const statusOptions = [
   { label: 'Aguardando Atendimento', value: 1 },
   { label: 'Em Atendimento', value: 2 },
@@ -119,4 +113,43 @@ export const tutorOptionsSample = [
 
 export const adaptToSelectOption = (label: any, value: any) => {
   return { label: label, value: value } as any;
+}
+
+export function addressAdapter(address:string):any{
+  let longAdress  = address.split(',');
+  return {
+    streetName:longAdress[0].trim() || 'Teste', 
+    cep: 0, 
+    number:longAdress[1].trim() || '-', 
+    district:longAdress[2].trim() || '-', 
+    city:'-',
+    additionalInformation:'-'
+  }
+}
+
+export function dateAdapter(date:string):string{
+    let [day,month,year] = date.split("/");
+
+    return `${year}-${month}-${day}`
+}
+
+export function tutorAdapter(newTutor:any):any{
+
+    let tutor = {
+      name: newTutor.tutor_name,
+      birthDate: dateAdapter(newTutor.birth_date),
+      cpf: newTutor.tutor_cpf,
+      email: newTutor.tutor_email,
+      addresses: [
+          addressAdapter(newTutor.address)
+      ],
+      telephones: [
+        {
+          description: 'Principal',
+          phoneNumber: newTutor.phone
+        }
+      ]
+  }
+  console.log(`dados enviados${tutor}`);
+  return tutor;
 }

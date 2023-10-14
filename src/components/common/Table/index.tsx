@@ -64,7 +64,7 @@ const tutorColumns: readonly BaseColumn[] = [
 const serviceOptions = ['Iniciar Atendimento', 'Finalizar Atendimento', 'Acessar Prontuário'];
 const tutorOptions = ['Editar', 'Arquivar'];
 const petOptions = ['Editar', 'Arquivar', 'Ver Prescrição'];
-const rowsPerPageOptions = [8,12,24];
+const rowsPerPageOptions = [10,25,50];
 
 export default function BaseTable({
     rows,
@@ -160,10 +160,54 @@ export default function BaseTable({
         }
     }
 
+    const getEmptyRow = () =>{
+        switch(type){
+            case 'tutor':
+                return (
+                    <StyledTableRow key={'none'}>
+                        <StyledTableCell/>
+                        <StyledTableCell scope="row" align='center'>
+                            Nenhum Resultado encontrado
+                        </StyledTableCell>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                    </StyledTableRow>
+                );
+            case 'pet':
+                return (
+                    <StyledTableRow key={'none'}>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                        <StyledTableCell scope="row" align='center'>
+                            Nenhum Resultado encontrado
+                        </StyledTableCell>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                    </StyledTableRow>
+                );
+            case 'service':
+                return (
+                    <StyledTableRow key={'none'}>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                        <StyledTableCell scope="row" align='center'>
+                            Nenhum Resultado encontrado
+                        </StyledTableCell>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                        <StyledTableCell/>
+                    </StyledTableRow>
+                );
+        }
+    }
+
     return (
         <Box>
             <TableContainer component={Paper}>
-                <Table aria-label="customized table">
+                <Table size='small' aria-label="customized table">
                     <TableHead>
                         <TableRow>
                             {getColumns().map((column) => (
@@ -178,15 +222,19 @@ export default function BaseTable({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows
+                        {rows != null ?
+                            rows
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => (getRows(row)))}
+                            .map((row) => (getRows(row)))
+                            :
+                            getEmptyRow()
+                        }
                     </TableBody>
                 </Table>
                 <TablePagination
                     rowsPerPageOptions={rowsPerPageOptions}
                     component="div"
-                    count={rows.length}
+                    count={rows? rows.length : 0}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import "./style.css";
 import { AccountCircle } from '@mui/icons-material';
-import logo from '../../../assets/landscape_logo.svg';
+import logo from '../../../assets/landscape_logo2.svg';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
@@ -13,7 +13,7 @@ import NavigationBarProps from './types';
 
 export default function NavigationBar({ children }: NavigationBarProps) {
   const navigationOptions = [
-      {label: 'Serviços', path: '/'},
+      {label: 'Serviços', path: '/home'},
       {label: 'Pets', path: '/pets'}, 
       {label: 'Tutores', path: '/tutors'},
   ];
@@ -25,7 +25,7 @@ export default function NavigationBar({ children }: NavigationBarProps) {
           <Toolbar className="app-bar">
             <Grid container direction={'row'} justifyContent={'center'} alignItems={'flex-start'}>
               <Grid item xs={4}>
-                <div className='logo'>
+                <div className='logo-nav'>
                   <img src={logo} alt='Logo'></img>
                 </div>
               </Grid>

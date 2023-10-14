@@ -1,8 +1,7 @@
 import { Alert, Box, Grid, IconButton, InputLabel, Modal, Paper, Snackbar, Typography } from "@mui/material";
 import "./style.css";
-import FilterModal from "../../common/ServiceFilterModal";
 import BaseTable from "../../common/Table";
-import { adaptToSelectOption, petOptionsSample, serviceRowsSample, statusOptions, tutorOptionsSample } from "../../../utils";
+import { adaptToSelectOption, petRowsSample, tutorOptionsSample } from "../../../utils";
 import DashedButton from "../../common/DashedButton";
 import React from "react";
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,6 +11,7 @@ import DateField from "../../common/DateField";
 import BaseSelect from "../../common/BaseSelect";
 import BasicButton from "../../common/BasicButton";
 import NavigationBar from "../../common/NavigationBar";
+import PetFilterModal from "../../common/PetsFilterModal";
 
 export default function ServiceListPage() {
     const [open, setOpen] = React.useState(false);
@@ -20,18 +20,12 @@ export default function ServiceListPage() {
     const openForm = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const getPetOptions = () => {
-        let response = petOptionsSample;
-
-        return response.map((option) => { return adaptToSelectOption(option.pet_name, option.id) });
-    }
     const getTutorOptions = () => {
         let response = tutorOptionsSample;
 
         return response.map((option) => { return adaptToSelectOption(option.pet_tutor, option.id) });
     }
 
-    const data1 = getPetOptions();
     const data2 = getTutorOptions();
 
     const handleSave = () => {
@@ -55,7 +49,7 @@ export default function ServiceListPage() {
                         <Grid container className={'modal'}>
                             <Grid container className="modal-title">
                                 <Grid item xs={11}>
-                                    <h5 className="modal-title-text">Agendar Serviço</h5>
+                                    <h5 className="modal-title-text">Adicionar Pet</h5>
                                 </Grid>
                                 <Grid item xs={1} textAlign={'end'}>
                                     <IconButton
@@ -75,23 +69,49 @@ export default function ServiceListPage() {
                                     <Form onSubmit={(state: any) => console.log(state)}>
                                         <Box className="formItem">
                                             <InputLabel sx={{ textAlign: 'start' }}>Nome do Pet</InputLabel>
-                                            <BaseSelect name={"pet_name"} isInputStyle options={data1} placeholder={"Nome do Pet"} />
+                                            <BaseInput name={"pet_name"} placeholder={"Nome do Pet"} size={"medium"} variant={"outlined"} />
                                         </Box>
                                         <Box className="formItem">
                                             <InputLabel sx={{ textAlign: 'start' }}>Nome do Tutor</InputLabel>
                                             <BaseSelect name={"pet_tutor"} isInputStyle placeholder={"Nome do Tutor"} options={data2} />
                                         </Box>
                                         <Box className="formItem">
-                                            <InputLabel sx={{ textAlign: 'start' }}>Data do Atendimento</InputLabel>
-                                            <DateField name={"date"} size="medium" placeholder="DD/MM/AAAA" />
+                                            <InputLabel sx={{ textAlign: 'start' }}>Espécie</InputLabel>
+                                            <BaseSelect 
+                                                name={"specie"} 
+                                                isInputStyle 
+                                                options={
+                                                    [
+                                                        {label: 'Cachorro', value: 'Cachorro'},
+                                                        {label: 'Gato', value: 'Gato'},
+                                                        {label: 'Outro', value: 'Outro'}
+                                                    ]
+                                                } 
+                                                placeholder={"Espécie"} 
+                                                />
                                         </Box>
                                         <Box className="formItem select">
-                                            <InputLabel sx={{ textAlign: 'start' }}>Status do Atendimento</InputLabel>
-                                            <BaseSelect name={"status"} isInputStyle defaultOption={statusOptions[0]} options={statusOptions} placeholder={"Status"} />
+                                            <InputLabel sx={{ textAlign: 'start' }}>Sexo do animal</InputLabel>
+                                            <BaseSelect 
+                                                name={"gender"} 
+                                                isInputStyle 
+                                                options={
+                                                    [
+                                                        {label: 'Masculino', value: 'Masculino'},
+                                                        {label: 'Feminino', value: 'Feminino'},
+                                                        {label: 'N/A', value: 'N/A'}
+                                                    ]
+                                                } 
+                                                placeholder={"Status"} 
+                                                />
                                         </Box>
                                         <Box className="formItem">
-                                            <InputLabel sx={{ textAlign: 'start' }}>Informações Adicionais</InputLabel>
-                                            <BaseInput name={"details"} placeholder={"Informações Adicionais"} size={"medium"} variant={"outlined"} />
+                                            <InputLabel sx={{ textAlign: 'start' }}>Raça</InputLabel>
+                                            <BaseInput name={"pet_breed"} placeholder={"Raça"} size={"medium"} variant={"outlined"} />
+                                        </Box>
+                                        <Box className="formItem">
+                                            <InputLabel sx={{ textAlign: 'start' }}>Data de Nascimento</InputLabel>
+                                            <DateField name={"birth_date"} size="medium" placeholder="DD/MM/AAAA" />
                                         </Box>
                                         <Grid container spacing={5} paddingTop={3} justifyContent={'center'}>
                                             <Grid item xs={4}>
@@ -133,7 +153,7 @@ export default function ServiceListPage() {
                                 </Grid>
                                 <Grid item xs={2}>
                                     <Box sx={{ paddingTop: '5px' }}>
-                                        <DashedButton disabled={false} onClick={openForm}>Agendar Serviço</DashedButton>
+                                        <DashedButton disabled={false} onClick={openForm}>Adicionar Pet</DashedButton>
                                     </Box>
                                     <Box>
                                         <Snackbar open={openToast} autoHideDuration={3000} onClose={handleCloseToat} anchorOrigin={{vertical:'top',horizontal:'right'}}>
@@ -147,14 +167,14 @@ export default function ServiceListPage() {
                         </Grid>
                         <Grid item xs={12} paddingTop={'0.5%'}>
                             <Box className="container-item">
-                                <FilterModal />
+                                <PetFilterModal />
                             </Box>
                         </Grid>
                         <Grid item xs={12} paddingTop={'1%'}>
                             <Box className="container-item table">
                                 <BaseTable
-                                    rows={serviceRowsSample}
-                                    type={"service"}
+                                    rows={petRowsSample}
+                                    type={"pet"}
                                 />
                             </Box>
                         </Grid>
