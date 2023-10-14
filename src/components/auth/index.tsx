@@ -1,11 +1,12 @@
 import './auth.css'
 import Box from '@mui/material/Box';
-import { Paper, styled } from '@mui/material';
+import { Alert, Grid, Paper, Snackbar, styled } from '@mui/material';
 import logo from '../../assets/landscape_logo.svg';
 import DashedButton from '../common/DashedButton';
 import { Form } from 'usetheform';
 import LoginInput from '../common/LoginInput';
-import axios from 'axios';
+import instance from '../../axiosConfig';
+import React from 'react';
 
 export default function ServerModal() {
   const LoginForm = styled(Paper)(({ theme }) => ({
@@ -19,36 +20,50 @@ export default function ServerModal() {
     backgroundColor: '#01FFB2'
   }));
 
+  const [openToast, setOpenToast] = React.useState(false)
 
-  const onSubmit = (state: any) => {
-    console.log(state);
-    let config = {
-      headers:{
-        contentType: 'application/json',
-        accept: '*/*'
-      }
-    }
-    axios.post(
-      'http://localhost:8080/auth/login',
+
+  async function doLogin(state: any) {
+    instance.post(`/auth/login`,
       {
-        login: state.login, 
+        login: state.login,
         password: state.password
-      },
-      config
-      ).then((response) => {
-        console.log(response);
-      }, (error) => {
-        console.log(error);
-      });
+      }
+    ).then((response) => {
+      console.log(response);
+      console.log(response.data.token);
+      instance.defaults.headers.common['Authorization'] = response.data.token;
+    }, (error) => {
+      console.log(error);
+      setOpenToast(true)
+    });
+  }
+  
+  const handleCloseToat = () => {
+    setOpenToast(false)
+  }
+
+  const onSubmit = async (state: any) => {
+    console.log(state);
+    await doLogin(state);
+
   }
   const required = (value: string) => { value && value.trim() !== "" ? undefined : "Required" };
 
   return (
     <Box sx={{ width: '100vw', height: '100vh' }}>
+      <Box>
+        <Snackbar open={openToast} autoHideDuration={3000} onClose={handleCloseToat} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+          <Alert onClose={handleCloseToat} severity="error" sx={{ width: '100%', backgroundColor: '#FC3600', color: 'white' }}>
+            Usuário e/ou Senha errado(s).
+          </Alert>
+        </Snackbar>
+      </Box>
+      <Grid container>
       <LoginForm className='form' elevation={10}>
         <Form onSubmit={onSubmit}>
           <div className='logo-div'>
-            <img className='logo' src={logo} alt='Logo'></img>
+            <img src={logo} alt='Logo'></img>
           </div>
           <h3>Login</h3>
           <div>
@@ -80,6 +95,7 @@ export default function ServerModal() {
           </div>
         </Form>
       </LoginForm>
+      </Grid>
     </Box>
   );
 }
