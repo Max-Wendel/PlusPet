@@ -38,7 +38,8 @@ export default function ServiceListPage() {
     const [openSuccessToast, setOpenSuccessToast] = React.useState(false);
     const [openErrorToast, setOpenErrorToast] = React.useState(false);
     const [showLoading, setShowLoading] = React.useState(false);
-
+    const navigation = useNavigate();
+    
     const getTutorOptions = () => {
         let data:any[] = [];
         setShowLoading(true);
@@ -77,12 +78,11 @@ export default function ServiceListPage() {
     ]);
 
     useEffect(() => {
-        let token = JSON.parse(localStorage.getItem('token') || '');
-        if (token) {
-            instance.defaults.headers.common['Authorization'] = token;
-        } else {
-            let navigation = useNavigate();
+        let token = JSON.parse(localStorage.getItem('token')||'{"error":true}');
+        if(token.error){
             navigation('/')
+        }else{
+            instance.defaults.headers.common['Authorization'] = token;
         }
     }, [dispatch]);
 

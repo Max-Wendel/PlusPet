@@ -1,5 +1,5 @@
 let env = {
-    REACT_APP_PLUSPET_API_ENDPOINT: 'http://localhost:8080'
+    REACT_APP_PLUSPET_API_ENDPOINT: 'https://pluspet-backend-production.up.railway.app'
   };
   
   if (typeof window !== 'undefined') {

@@ -2,11 +2,11 @@ import axios from 'axios';
 
 
 const PlusPetV1Service = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://pluspet-backend-production.up.railway.app',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': JSON.parse(localStorage.getItem('token')||'{}')
+    'Authorization': JSON.parse(localStorage.getItem('token')||'{"error":true}')
   }
 });
 

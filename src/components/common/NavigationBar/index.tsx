@@ -10,6 +10,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Box, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import NavigationBarProps from './types';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavigationBar({ children }: NavigationBarProps) {
   const navigationOptions = [
@@ -17,6 +18,12 @@ export default function NavigationBar({ children }: NavigationBarProps) {
       {label: 'Pets', path: '/pets'}, 
       {label: 'Tutores', path: '/tutors'},
   ];
+  let navigate = useNavigate();
+
+  const handleLogout=()=>{
+    localStorage.clear();
+    navigate('/');
+  }
 
   return (
     <>
@@ -39,7 +46,7 @@ export default function NavigationBar({ children }: NavigationBarProps) {
               </Grid>
               <Grid item xs={4}>
                 <div className="logout-button">
-                  <Button color="inherit">
+                  <Button color="inherit" onClick={handleLogout}>
                     <Typography variant="button" sx={{ fontSize: '16px', color: 'black', fontWeight: 'bolder' }}>Sair</Typography>
                     <ExitToAppIcon sx={{ color: 'black' }} fontSize='large' />
                   </Button>

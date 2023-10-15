@@ -28,6 +28,8 @@ export default function TutorListPage() {
     const [openSuccessToast, setOpenSuccessToast] = React.useState(false);
     const [openErrorToast, setOpenErrorToast] = React.useState(false);
     const [showLoading, setShowLoading] = React.useState(false);
+    let navigation = useNavigate();
+
 
     const openForm = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -52,12 +54,11 @@ export default function TutorListPage() {
     ]);
 
     useEffect(() => {
-        let token = JSON.parse(localStorage.getItem('token')||'');
-        if(token){
-            instance.defaults.headers.common['Authorization'] = token;
-        }else{
-            let navigation = useNavigate();
+        let token = JSON.parse(localStorage.getItem('token')||'{"error":true}');
+        if(token.error){
             navigation('/')
+        }else{
+            instance.defaults.headers.common['Authorization'] = token;
         }
     }, [dispatch]);
 
