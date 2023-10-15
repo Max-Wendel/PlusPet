@@ -1,11 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import ListTutorSlice from '../components/Pages/TutorList/ListTutorSlice';
 import UserSlice from '../slices/UserSlice';
-import helperSlice from '../slices/helperSlice';
+// import helperSlice from '../slices/helperSlice';
 
 export const store = configureStore({
   reducer: {
-    helper: helperSlice,
+    // helper: helperSlice,
     user: UserSlice,
     listActiveTutors: ListTutorSlice
   },

@@ -1,7 +1,7 @@
 import { Alert, Box, Grid, IconButton, InputLabel, Modal, Paper, Snackbar, Typography } from "@mui/material";
 import "./style.css";
 import BaseTable from "../../common/Table";
-import { createTutorSample, tutorAdapter } from "../../../utils";
+import { createTutorSample, tutorAdapter} from "../../../utils";
 import DashedButton from "../../common/DashedButton";
 import React, { useEffect, useMemo } from "react";
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,6 +16,7 @@ import SimpleBackdrop from "../../common/BackDrop";
 import TutorAPI from "../../../api/TutorAPI";
 import {useAppDispatch, useAppSelector, useQuery} from '../../../app/hooks';
 import { selectFilter, selectPagination, selectTutors, setFilter, setPage } from "./ListTutorSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function TutorListPage() {
     const dispatch = useAppDispatch();
@@ -41,7 +42,6 @@ export default function TutorListPage() {
     }
 
     const listTutorApi = TutorAPI.useListActives(page, itensPerPage, "", filterAplied);
-
     // const listTutorApi = axios.
 
     let tutorList = useMemo(() => {
@@ -62,6 +62,17 @@ export default function TutorListPage() {
     // useEffect(){
     //     setTutors(tutorListA || []);
     // }
+
+    useEffect(() => {
+        let token = JSON.parse(localStorage.getItem('token')||'');
+        if(token){
+            instance.defaults.headers.common['Authorization'] = token;
+        }else{
+            let navigation = useNavigate();
+            navigation('/')
+        }
+        //fetchData();
+    }, [dispatch]);
 
     const handleSave = (newTutor: any) => {
         setShowLoading(true);

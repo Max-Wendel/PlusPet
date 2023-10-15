@@ -10,18 +10,16 @@ import { Provider } from "react-redux";
 
 const AplicationRoutes = () => {
     return (
-        <Provider store = {store}>
-            <BrowserRouter>
-                <Routes>
-                    <Route Component={Login} path="/" />
-                    <Route Component={Services} path="/home" />
-                    <Route Component={Login} path="/" />
-                    <Route Component={Pets} path="/pets" />
-                    <Route Component={Tutors} path="/tutors" />
-                    <Route Component={ErrorPage} path="/"/>
-                </Routes>
-            </BrowserRouter>
-        </Provider>
+        <BrowserRouter>
+            <Routes>
+                <Route Component={Login} path="/" />
+                <Route Component={Services} path="/home" />
+                <Route Component={Login} path="/" />
+                <Route Component={Pets} path="/pets" />
+                <Route Component={Tutors} path="/tutors" />
+                <Route Component={ErrorPage} path="/"/>
+            </Routes>
+        </BrowserRouter>
     )
 }
 
