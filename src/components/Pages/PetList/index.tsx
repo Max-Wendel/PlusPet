@@ -1,7 +1,7 @@
 import { Alert, Box, Grid, IconButton, InputLabel, Modal, Paper, Snackbar, Typography } from "@mui/material";
 import "./style.css";
 import BaseTable from "../../common/Table";
-import { adaptToSelectOption, petRowsSample, tutorOptionsSample } from "../../../utils";
+import { adaptToSelectOption, tutorOptionsSample } from "../../../utils";
 import DashedButton from "../../common/DashedButton";
 import React, { useEffect, useMemo } from "react";
 import CloseIcon from '@mui/icons-material/Close';
@@ -144,7 +144,6 @@ export default function ServiceListPage() {
                                                     [
                                                         {label: 'Masculino', value: 'Masculino'},
                                                         {label: 'Feminino', value: 'Feminino'},
-                                                        {label: 'N/A', value: 'N/A'}
                                                     ]
                                                 } 
                                                 placeholder={"Status"} 
