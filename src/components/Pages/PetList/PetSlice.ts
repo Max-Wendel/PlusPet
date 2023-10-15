@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../../app/store";
 import Slice from "../../../enums/Slice";
 import Pet from "../../../model/Pet";
-import PetFilter from "../../../model/PETFilter";
+import PetFilter from "../../../model/PetFilter";
 
 interface ListPetSlice {
     pagination : { page: number, itensPerPage: number };

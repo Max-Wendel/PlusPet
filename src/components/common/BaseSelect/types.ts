@@ -1,3 +1,5 @@
+import selectorHelper from "../../../model/selectorHelper";
+
 export default interface BaseSelectProps {
     options: any[];
     name?: string;
@@ -5,4 +7,6 @@ export default interface BaseSelectProps {
     defaultOption?: any;
     isInputStyle?: boolean | false;
     isClearable?: boolean | false;
+    value?: selectorHelper;
+    onChange?: (ev:any)=>void;
 }

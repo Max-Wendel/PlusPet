@@ -1,10 +1,8 @@
-import Tutor from '../model/Tutor';
-import TutorFilter from '../model/TutorFilter'
 import Pagination from '../model/Pagination'
 import { AxiosResponse } from 'axios';
 import qs from 'query-string';
 import Api from '../service/PlusPetV1Service';
-import PetFilter from '../model/PETFilter';
+import PetFilter from '../model/PetFilter';
 import Pet from '../model/Pet';
 
 const PetProvider = { 

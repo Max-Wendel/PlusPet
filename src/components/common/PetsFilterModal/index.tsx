@@ -1,9 +1,6 @@
 import { Box, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
-import BaseInput from "../BaseInput";
 import BasicButton from "../BasicButton";
 import './style.css';
-import { Form } from "usetheform";
-import ClearButton from "../ClearButton";
 import BaseSelect from "../BaseSelect";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectFilter, setFilter, setPage } from "../../Pages/PetList/PetSlice";
@@ -15,6 +12,8 @@ export default function PetFilterModal() {
     const dispatch = useAppDispatch();
     const apliedFilter = useAppSelector(selectFilter);
     const [filterToAply, setFilterToAply] = useState<PetFilter>({});
+    const [gender, setGender] = useState(null);
+    const [spieces, setSpieces] = useState(null);
 
     const setFilterNameToAply = (name?: string) => {
         setFilterToAply((prev) => ({ ...prev, name: name}));
@@ -22,12 +21,14 @@ export default function PetFilterModal() {
     const setFilterTutorToAply = (tutorName?: string) => {
         setFilterToAply((prev) => ({ ...prev, tutorName: tutorName}));
     }
-    const setFilterGenderToAply = (gender?: string) => {
-        setFilterToAply((prev) => ({ ...prev, gender: gender}));
+    const setFilterGenderToAply = (gender?: any) => {
+        setGender(gender);
+        setFilterToAply((prev) => ({ ...prev, gender: gender.value}));
     }
 
-    const setFilterSpiecesToAply = (spieces?: string) => {
-        setFilterToAply((prev) => ({ ...prev, spieces: spieces}));
+    const setFilterSpiecesToAply = (spieces?: any) => {  
+        setSpieces(spieces);
+        setFilterToAply((prev) => ({ ...prev, spieces: spieces.value}));
     }
 
     const handleClearFilter = ()=>{
@@ -73,25 +74,29 @@ export default function PetFilterModal() {
                                             onChange={(ev) => setFilterTutorToAply(ev.target.value.length > 0 ? ev.target.value : undefined)}>
                                         </TextField>
                                     </Grid>
-                                    {/* <Grid item xs={2}>
+                                    <Grid item xs={2}>
                                         <BaseSelect
                                             name="specie"
                                             placeholder="Espécie"
                                             isClearable
+                                            value={spieces || undefined}
+                                            onChange={(ev)=> {setFilterSpiecesToAply(ev != null  ? ev : undefined)}}
                                             options={
                                                 [
                                                     { label: 'Cachorro', value: 'Cachorro' },
                                                     { label: 'Gato', value: 'Gato' },
-                                                    { label: 'Outros', value: 'Outros' },
+                                                    { label: 'Todos', value: '' },
                                                 ]
                                             }
                                         /> 
-                                    </Grid>*/}
-                                    {/* <Grid item xs={2}>
+                                    </Grid>
+                                    <Grid item xs={2}>
                                         <BaseSelect
                                             name="gender"
                                             placeholder="Sexo do Pet"
                                             isClearable
+                                            value={gender || undefined}
+                                            onChange={(ev)=> {setFilterGenderToAply(ev != null ? ev : undefined)}}
                                             options={
                                                 [
                                                     { label: 'Masculino', value: 'Masculino' },
@@ -99,7 +104,7 @@ export default function PetFilterModal() {
                                                 ]
                                             }
                                         />
-                                    </Grid> */}
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item xs={12}>
@@ -107,7 +112,7 @@ export default function PetFilterModal() {
                                     <Grid item xs={2}>
                                         <BasicButton
                                             variant={"contained"}
-                                            disabled={!(filterToAply.name != null || filterToAply.tutorName != null || filterToAply.gender != null || filterToAply.spieces != null)}
+                                            disabled={!(filterToAply.name != null || filterToAply.tutorName != null || filterToAply.gender != null || filterToAply.spieces != null || filterToAply.spieces != null)}
                                             onClick={() => handleClearFilter()}
                                             sx={{ borderBottomColor: '#FC8C19', backgroundColor: 'transparent', border: '1px solid #FC8C19', color: 'black', fontWeight: 'bolder', maxHeight:'40px' }}
                                         >
