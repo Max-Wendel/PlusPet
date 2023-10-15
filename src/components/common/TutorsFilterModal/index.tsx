@@ -1,11 +1,8 @@
 import { Box, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
-import BaseInput from "../BaseInput";
 import BasicButton from "../BasicButton";
 import './style.css';
-import { Form } from "usetheform";
-import ClearButton from "../ClearButton";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { selectFilter, setFilter, setFilterName, setPage } from "../../Pages/TutorList/ListTutorSlice";
+import { selectFilter, setFilter, setPage } from "../../Pages/TutorList/ListTutorSlice";
 import TutorFilter from "../../../model/TutorFilter";
 import { useEffect, useState } from "react";
 
@@ -14,10 +11,6 @@ export default function TutorFilterModal() {
     const dispatch = useAppDispatch();
     const apliedFilter = useAppSelector(selectFilter);
     const [filterToAply, setFilterToAply] = useState<TutorFilter>({});
-    // const page = pagination.page;
-    // const itensPerPage = pagination.itensPerPage;
-    // const [open, setOpen] = React.useState(false);
-    // const filterAplied = useAppSelector(selectFilter);
 
     const setFilterNameToAply = (name?: string) => {
         setFilterToAply((prev) => ({ ...prev, name: name}));
@@ -53,11 +46,13 @@ export default function TutorFilterModal() {
                             <Divider />
                         </Grid>
                         <Grid item xs={12} >
-                            <Grid container spacing={3}>
+                            <Grid container spacing={4}>
                                 <Grid item xs={4} sm={4}>
                                     <TextField
                                     value={filterToAply.name || ''}
-                                    placeholder="Nome do Tutor" size="small"
+                                    placeholder="Nome do Tutor" 
+                                    size="small"
+                                    fullWidth
                                     onChange={(ev) => setFilterNameToAply(ev.target.value.length > 0 ? ev.target.value : undefined)}>
                                     </TextField>
                                 </Grid>
@@ -65,6 +60,8 @@ export default function TutorFilterModal() {
                                     <TextField
                                         value={filterToAply.cpf || ''}
                                         placeholder="CPF"
+                                        size="small"
+                                        fullWidth
                                         onChange={(ev) => setFilterCpfToAply(ev.target.value.length > 0 ? ev.target.value : undefined)}>
                                     </TextField>
                                 </Grid>
@@ -72,6 +69,8 @@ export default function TutorFilterModal() {
                                 <TextField
                                     value={filterToAply.email || ''}
                                     placeholder="Email"
+                                    size="small"
+                                    fullWidth
                                     onChange={(ev) => setFilterEmailToAply(ev.target.value.length > 0 ? ev.target.value : undefined)}>
                                     </TextField>
                                 </Grid>
@@ -82,9 +81,9 @@ export default function TutorFilterModal() {
                                 <Grid item xs={2}>
                                 <BasicButton
                                     variant={"contained"}
-                                    disabled={false}
+                                    disabled={!(filterToAply.cpf != null || filterToAply.email != null|| filterToAply.name != null)}
                                     onClick={() => handleClearFilter()}
-                                    sx={{ borderBottomColor: '#FC8C19', backgroundColor: 'transparent', border: '1px solid #FC8C19', color: 'black', fontWeight: 'bolder' }}
+                                    sx={{ borderBottomColor: '#FC8C19', backgroundColor: 'transparent', border: '1px solid #FC8C19', color: 'black', fontWeight: 'bolder', maxHeight:'40px' }}
                                 >
                                     LIMPAR FILTROS
                                 </BasicButton>
@@ -95,7 +94,7 @@ export default function TutorFilterModal() {
                                     disabled={false}
                                     type="submit"
                                     onClick={() => handleApplyFilterClick()}
-                                    sx={{ backgroundColor: '#FC8C19', color: 'black', fontWeight: 'bolder' }}
+                                    sx={{ backgroundColor: '#FC8C19', color: 'black', fontWeight: 'bolder', maxHeight:'40px' }}
                                 >
                                     Aplicar Filtros
                                 </BasicButton>

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../app/store';
 import Slice from '../enums/Slice';
 
 interface HelperState {
@@ -27,7 +26,5 @@ export const {
   iniciar,
   setIsLoading,
 } = helperSlice.actions;
-
-export const selectIsLoading = (state: RootState) => state.helper.isLoading;
 
 export default helperSlice.reducer;
