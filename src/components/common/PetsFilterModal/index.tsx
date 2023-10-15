@@ -7,7 +7,7 @@ import ClearButton from "../ClearButton";
 import BaseSelect from "../BaseSelect";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectFilter, setFilter, setPage } from "../../Pages/PetList/PetSlice";
-import PetFilter from "../../../model/PETFilter";
+import PetFilter from "../../../model/PetFilter";
 import { useEffect, useState } from "react";
 
 export default function PetFilterModal() {

@@ -10,7 +10,7 @@ import { Box, IconButton, Paper, TablePagination } from '@mui/material';
 import React from 'react';
 import TableIcon from '../TableIcon';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {getFormatedCPF, getGender} from './utils'
+import {getFormatedCPF} from './utils'
 import "./style.css"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -120,9 +120,9 @@ export default function BaseTable({
                         </StyledTableCell>
                         <StyledTableCell align='left'>{row.name}</StyledTableCell>
                         <StyledTableCell align="left">{row.tutor.name}</StyledTableCell>
-                        <StyledTableCell align="left">{row.specie}</StyledTableCell>
+                        <StyledTableCell align="left">{row.spieces}</StyledTableCell>
                         <StyledTableCell align="left">{row.breed}</StyledTableCell>
-                        <StyledTableCell align="center">{getGender(row.gender)}</StyledTableCell>
+                        <StyledTableCell align="center">{row.gender}</StyledTableCell>
                         <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell>
                     </StyledTableRow>
                 );

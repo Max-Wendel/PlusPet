@@ -1,7 +1,7 @@
 import { Alert, Box, Grid, IconButton, InputLabel, Modal, Paper, Snackbar, Typography } from "@mui/material";
 import "./style.css";
 import BaseTable from "../../common/Table";
-import { adaptToSelectOption, tutorOptionsSample } from "../../../utils";
+import { adaptToSelectOption } from "../../../utils";
 import DashedButton from "../../common/DashedButton";
 import React, { useEffect, useMemo } from "react";
 import CloseIcon from '@mui/icons-material/Close';
@@ -17,19 +17,18 @@ import { selectFilter, selectPagination } from "./PetSlice";
 import PetAPI from "../../../api/PetAPI";
 import instance from "../../../axiosConfig";
 import { useNavigate } from "react-router-dom";
+import SimpleBackdrop from "../../common/BackDrop";
 
 export default function ServiceListPage() {
     const [open, setOpen] = React.useState(false);
-    const [openToast, setOpenToast] = React.useState(false)
+    const [petTutors, setPetTutors] = React.useState<any>([])
 
-    const openForm = () => setOpen(true);
+    const openForm = () => {
+        getTutorOptions();
+        setOpen(true);
+    };
+
     const handleClose = () => setOpen(false);
-
-    const getTutorOptions = () => {
-        let response = tutorOptionsSample;
-
-        return response.map((option) => { return adaptToSelectOption(option.pet_tutor, option.id) });
-    }
 
     const dispatch = useAppDispatch();
     const pagination = useAppSelector(selectPagination);
@@ -39,6 +38,23 @@ export default function ServiceListPage() {
     const [openSuccessToast, setOpenSuccessToast] = React.useState(false);
     const [openErrorToast, setOpenErrorToast] = React.useState(false);
     const [showLoading, setShowLoading] = React.useState(false);
+
+    const getTutorOptions = () => {
+        let data:any[] = [];
+        setShowLoading(true);
+        instance.get('/v1/tutor/active')
+            .then((response) => {
+                data = response.data.content;
+                data =  data.map((option:any) => { return adaptToSelectOption(option.name, option.id) });
+                setShowLoading(false);
+                setPetTutors(data);
+            })
+            .catch((error) => {
+                console.error(error);
+                setShowLoading(false);
+                setPetTutors(data)
+            })
+    }
 
 
     const handleCloseSuccessToast = () => {
@@ -50,38 +66,50 @@ export default function ServiceListPage() {
     }
 
     const listPetApi = PetAPI.useListActives(page, itensPerPage, "", filterAplied);
-    // const listTutorApi = axios.
 
     let petList = useMemo(() => {
-        if(listPetApi.isSuccess){
+        if (listPetApi.isSuccess) {
             return listPetApi.data?.content;
         }
         return [];
-    },[
+    }, [
         listPetApi, listPetApi.data?.content
     ]);
 
     useEffect(() => {
-        let token = JSON.parse(localStorage.getItem('token')||'');
-        if(token){
+        let token = JSON.parse(localStorage.getItem('token') || '');
+        if (token) {
             instance.defaults.headers.common['Authorization'] = token;
-        }else{
+        } else {
             let navigation = useNavigate();
             navigation('/')
         }
     }, [dispatch]);
 
-    const data2 = getTutorOptions();
-
-    const handleSave = () => {
-        console.log("SALVO")
-        handleClose()
-        setOpenToast(true)
+    const handleSave = (state:any) => {
+        setShowLoading(true)
+        instance.post('/v1/pet',
+            {
+             name: state.pet_name,
+             tutor: { id: state.pet_tutor.value },
+             birthDate: state.birth_date || '',
+             gender: state.gender.value || 'Masculino',
+             breed:  state.pet_breed || 'RND',
+             spieces: state.specie.value || '-'
+            }
+        )
+        .then(()=>{
+            handleClose();
+            setOpenSuccessToast(true);
+            handleClose()        
+        })
+        .catch((error)=>{
+            console.log(error);
+            setOpenErrorToast(true)
+        });
+        setShowLoading(false);
     };
 
-    const handleCloseToat = ()=>{
-        setOpenToast(false)
-    }
     return (
         <NavigationBar>
             <Box className="containerBox">
@@ -111,43 +139,43 @@ export default function ServiceListPage() {
                             </Grid>
                             <Grid container>
                                 <Grid item xs={11} justifyContent={'center'} className="modal-content">
-                                    <Form onSubmit={(state: any) => console.log(state)}>
+                                    <Form onSubmit={(state: any) => handleSave(state)}>
                                         <Box className="formItem">
                                             <InputLabel sx={{ textAlign: 'start' }}>Nome do Pet</InputLabel>
                                             <BaseInput name={"pet_name"} placeholder={"Nome do Pet"} size={"medium"} variant={"outlined"} />
                                         </Box>
                                         <Box className="formItem">
                                             <InputLabel sx={{ textAlign: 'start' }}>Nome do Tutor</InputLabel>
-                                            <BaseSelect name={"pet_tutor"} isInputStyle placeholder={"Nome do Tutor"} options={data2} />
+                                            <BaseSelect name={"pet_tutor"} isInputStyle placeholder={"Nome do Tutor"} options={petTutors} />
                                         </Box>
                                         <Box className="formItem">
                                             <InputLabel sx={{ textAlign: 'start' }}>Espécie</InputLabel>
-                                            <BaseSelect 
-                                                name={"specie"} 
-                                                isInputStyle 
+                                            <BaseSelect
+                                                name={"specie"}
+                                                isInputStyle
                                                 options={
                                                     [
-                                                        {label: 'Cachorro', value: 'Cachorro'},
-                                                        {label: 'Gato', value: 'Gato'},
-                                                        {label: 'Outro', value: 'Outro'}
+                                                        { label: 'Cachorro', value: 'Cachorro' },
+                                                        { label: 'Gato', value: 'Gato' },
+                                                        { label: 'Outro', value: 'Outro' }
                                                     ]
-                                                } 
-                                                placeholder={"Espécie"} 
-                                                />
+                                                }
+                                                placeholder={"Espécie"}
+                                            />
                                         </Box>
                                         <Box className="formItem select">
                                             <InputLabel sx={{ textAlign: 'start' }}>Sexo do animal</InputLabel>
-                                            <BaseSelect 
-                                                name={"gender"} 
-                                                isInputStyle 
+                                            <BaseSelect
+                                                name={"gender"}
+                                                isInputStyle
                                                 options={
                                                     [
-                                                        {label: 'Masculino', value: 'Masculino'},
-                                                        {label: 'Feminino', value: 'Feminino'},
+                                                        { label: 'Masculino', value: 'Masculino' },
+                                                        { label: 'Feminino', value: 'Feminino' },
                                                     ]
-                                                } 
-                                                placeholder={"Status"} 
-                                                />
+                                                }
+                                                placeholder={"Status"}
+                                            />
                                         </Box>
                                         <Box className="formItem">
                                             <InputLabel sx={{ textAlign: 'start' }}>Raça</InputLabel>
@@ -173,7 +201,6 @@ export default function ServiceListPage() {
                                                     variant={"contained"}
                                                     disabled={false}
                                                     type="submit"
-                                                    onClick={handleSave}
                                                     sx={{ backgroundColor: '#00FC22', fontWeight: 'bolder', fontSize: 16 }}
                                                 >
                                                     SALVAR
@@ -188,6 +215,9 @@ export default function ServiceListPage() {
                 </Box>
                 {/* End Modal */}
 
+                <SimpleBackdrop open={showLoading} />
+
+
                 <Paper elevation={3} sx={{ minHeight: '100%' }}>
                     <Grid container>
                         <Grid item xs={12} alignContent={'center'}>
@@ -200,9 +230,16 @@ export default function ServiceListPage() {
                                         <DashedButton disabled={false} onClick={openForm}>Adicionar Pet</DashedButton>
                                     </Box>
                                     <Box>
-                                        <Snackbar open={openToast} autoHideDuration={3000} onClose={handleCloseToat} anchorOrigin={{vertical:'top',horizontal:'right'}}>
-                                            <Alert onClose={handleCloseToat} severity="success" sx={{ width: '100%', backgroundColor: '#00FC22', color: 'white' }}>
+                                        <Snackbar open={openSuccessToast} autoHideDuration={3000} onClose={handleCloseSuccessToast} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                                            <Alert onClose={handleCloseSuccessToast} severity="success" sx={{ width: '100%', backgroundColor: '#00FC22', color: 'white' }}>
                                                 Operação realizada com sucesso!
+                                            </Alert>
+                                        </Snackbar>
+                                    </Box>
+                                    <Box>
+                                        <Snackbar open={openErrorToast} autoHideDuration={3000} onClose={handleCloseErrorToast} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                                            <Alert onClose={handleCloseErrorToast} severity="error" sx={{ width: '100%', backgroundColor: '#FC3600', color: 'white' }}>
+                                                Houve um erro ao realizar a operação!
                                             </Alert>
                                         </Snackbar>
                                     </Box>

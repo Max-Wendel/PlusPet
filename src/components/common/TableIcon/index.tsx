@@ -41,7 +41,7 @@ function vetIcon(color:string){
 }
 
 function genderIcon(gender:string){
-    return gender === 'female'? <FemaleIcon sx={{color:'#FF00C7'}}/> : <MaleIcon sx={{color:'#04E1FF'}}/> 
+    return gender === 'Feminino'? <FemaleIcon sx={{color:'#FF00C7'}}/> : <MaleIcon sx={{color:'#04E1FF'}}/> 
 }
 
 export default function TableIcon({
