@@ -1,8 +1,6 @@
 import AuthService from "../providers/AuthProvider";
 
 import {
-    REGISTER_SUCCESS,
-    REGISTER_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,

@@ -4,12 +4,12 @@ import { Alert, Paper, Snackbar, Typography, styled } from '@mui/material';
 import logo from '../../../assets/landscape_logo.svg';
 
 import { Form } from 'usetheform';
-import React, { useState } from 'react';
-import instance from '../../../axiosConfig';
+import React from 'react';
 import LoginInput from '../../common/LoginInput';
 import DashedButton from '../../common/DashedButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import instance from '../../../axiosConfig';
 
 export default function ServerModal() {
   const LoginForm = styled(Paper)(({ theme }) => ({
@@ -34,9 +34,6 @@ export default function ServerModal() {
         password: state.password
       }
     ).then((response) => {
-      console.log(response);
-      console.log(response.data.token);
-      instance.defaults.headers.common['Authorization'] = response.data.token;
       localStorage.setItem('token', JSON.stringify(response.data.token));
       navigate('/tutors');
     }, (error) => {

@@ -1,7 +1,7 @@
 import { Alert, Box, Grid, IconButton, InputLabel, Modal, Paper, Snackbar, Typography } from "@mui/material";
 import "./style.css";
 import BaseTable from "../../common/Table";
-import { createTutorSample, tutorAdapter} from "../../../utils";
+import {tutorAdapter} from "../../../utils";
 import DashedButton from "../../common/DashedButton";
 import React, { useEffect, useMemo } from "react";
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,8 +14,8 @@ import TutorFilterModal from "../../common/TutorsFilterModal";
 import instance from "../../../axiosConfig";
 import SimpleBackdrop from "../../common/BackDrop";
 import TutorAPI from "../../../api/TutorAPI";
-import {useAppDispatch, useAppSelector, useQuery} from '../../../app/hooks';
-import { selectFilter, selectPagination, selectTutors, setFilter, setPage } from "./ListTutorSlice";
+import {useAppDispatch, useAppSelector} from '../../../app/hooks';
+import { selectFilter, selectPagination } from "./ListTutorSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function TutorListPage() {
@@ -25,7 +25,6 @@ export default function TutorListPage() {
     const itensPerPage = pagination.itensPerPage;
     const [open, setOpen] = React.useState(false);
     const filterAplied = useAppSelector(selectFilter);
-    // const tutorList = useAppSelector(selectTutors);
     const [openSuccessToast, setOpenSuccessToast] = React.useState(false);
     const [openErrorToast, setOpenErrorToast] = React.useState(false);
     const [showLoading, setShowLoading] = React.useState(false);
@@ -42,7 +41,6 @@ export default function TutorListPage() {
     }
 
     const listTutorApi = TutorAPI.useListActives(page, itensPerPage, "", filterAplied);
-    // const listTutorApi = axios.
 
     let tutorList = useMemo(() => {
         if(listTutorApi.isSuccess){
@@ -53,16 +51,6 @@ export default function TutorListPage() {
         listTutorApi, listTutorApi.data?.content
     ]);
 
-    // setTutors(tutorListA || []);
-
-    // useEffect(() => {
-    //     setTutors(tutorListA || []);
-    // }, [tutorList])
-
-    // useEffect(){
-    //     setTutors(tutorListA || []);
-    // }
-
     useEffect(() => {
         let token = JSON.parse(localStorage.getItem('token')||'');
         if(token){
@@ -71,7 +59,6 @@ export default function TutorListPage() {
             let navigation = useNavigate();
             navigation('/')
         }
-        //fetchData();
     }, [dispatch]);
 
     const handleSave = (newTutor: any) => {

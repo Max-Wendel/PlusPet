@@ -4,10 +4,6 @@ import { RootState } from "../../../app/store";
 import Slice from "../../../enums/Slice";
 import Tutor from "../../../model/Tutor";
 import TutorProvider from "../../../providers/TutorProvider";
-import TutorAPI from "../../../api/TutorAPI";
-import { RouteProps } from "react-router-dom";
-
-
 
 interface ListTutorSlice{
     pagination : { page: number, itensPerPage: number };

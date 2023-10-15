@@ -6,13 +6,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import BaseTableProps, { BaseColumn } from './types';
-import { Box, Paper, TablePagination } from '@mui/material';
+import { Box, IconButton, Paper, TablePagination } from '@mui/material';
 import React from 'react';
 import TableIcon from '../TableIcon';
-import OptionMenu from '../OptionsMenu';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {getFormatedCPF, getGender} from './utils'
 import "./style.css"
-import OptionMenuTutor from '../OptionsMenuTutor';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -62,9 +61,6 @@ const tutorColumns: readonly BaseColumn[] = [
     { id: 'button', label: '', align: 'right', minWidth: 30 },
 ];
 
-const serviceOptions = ['Iniciar Atendimento', 'Finalizar Atendimento', 'Acessar Prontuário'];
-const tutorOptions = ['Editar', 'Arquivar'];
-const petOptions = ['Editar', 'Arquivar', 'Ver Prescrição'];
 const rowsPerPageOptions = [10,25,50];
 
 export default function BaseTable({
@@ -105,15 +101,12 @@ export default function BaseTable({
         }
     };
 
-    const getOptionMenu = (id:string) => {
-        switch (type) {
-            // case 'pet':
-            //     return (<OptionMenu options={petOptions}/>);
-            // case 'service':
-            //     return (<OptionMenu options={serviceOptions}/>)
-            // case 'tutor':
-            //         return (<OptionMenuTutor tutorId={id}/>)
-        }
+    const getOptionMenu = () => {
+        return (
+            <IconButton>
+                <MoreVertIcon/>
+            </IconButton>
+        )
 
     }
 
@@ -130,7 +123,7 @@ export default function BaseTable({
                         <StyledTableCell align="left">{row.specie}</StyledTableCell>
                         <StyledTableCell align="left">{row.breed}</StyledTableCell>
                         <StyledTableCell align="center">{getGender(row.gender)}</StyledTableCell>
-                        {/* <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell> */}
+                        <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell>
                     </StyledTableRow>
                 );
             case 'service':
@@ -144,7 +137,7 @@ export default function BaseTable({
                         <StyledTableCell align="left">{row.service}</StyledTableCell>
                         <StyledTableCell align="left">{row.status}</StyledTableCell>
                         <StyledTableCell align="center">{row.date}</StyledTableCell>
-                        {/* <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell> */}
+                        <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell>
                     </StyledTableRow>
                 );
             case 'tutor':
@@ -155,7 +148,7 @@ export default function BaseTable({
                         </StyledTableCell>
                         <StyledTableCell align="center">{getFormatedCPF(row.cpf)}</StyledTableCell>
                         <StyledTableCell align="center">{row.email}</StyledTableCell>
-                        {/* <StyledTableCell align="right">{getOptionMenu(row.id)}</StyledTableCell> */}
+                        <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell>
                     </StyledTableRow>
                 );
         }
@@ -223,7 +216,7 @@ export default function BaseTable({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows != null ?
+                        {rows != null && rows.length>0 ?
                             rows
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => (getRows(row)))

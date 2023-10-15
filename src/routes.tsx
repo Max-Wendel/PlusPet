@@ -5,8 +5,6 @@ import Pets from "./components/Pages/PetList";
 import Tutors from "./components/Pages/TutorList";
 import Login from "./components/Pages/Login"
 import ErrorPage from "./components/Pages/ErrorPage";
-import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
 
 const AplicationRoutes = () => {
     return (
