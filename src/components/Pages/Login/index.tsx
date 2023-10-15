@@ -9,6 +9,7 @@ import instance from '../../../axiosConfig';
 import LoginInput from '../../common/LoginInput';
 import DashedButton from '../../common/DashedButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 export default function ServerModal() {
   const LoginForm = styled(Paper)(({ theme }) => ({
@@ -24,7 +25,7 @@ export default function ServerModal() {
 
   const [openToast, setOpenToast] = React.useState(false)
   const [forgotAccess, setForgotAccess] = React.useState(false);
-
+  const navigate = useNavigate();
 
   async function doLogin(state: any) {
     instance.post(`/auth/login`,
@@ -36,6 +37,8 @@ export default function ServerModal() {
       console.log(response);
       console.log(response.data.token);
       instance.defaults.headers.common['Authorization'] = response.data.token;
+      localStorage.setItem('token', JSON.stringify(response.data.token));
+      navigate('/tutors');
     }, (error) => {
       console.log(error);
       setOpenToast(true)

@@ -1,7 +1,7 @@
 import { Alert, Box, Grid, IconButton, InputLabel, Modal, Paper, Snackbar, Typography } from "@mui/material";
 import "./style.css";
 import BaseTable from "../../common/Table";
-import { createTutorSample, tutorAdapter } from "../../../utils";
+import { createTutorSample, tutorAdapter} from "../../../utils";
 import DashedButton from "../../common/DashedButton";
 import React, { useEffect } from "react";
 import CloseIcon from '@mui/icons-material/Close';
@@ -13,6 +13,7 @@ import NavigationBar from "../../common/NavigationBar";
 import TutorFilterModal from "../../common/TutorsFilterModal";
 import instance from "../../../axiosConfig";
 import SimpleBackdrop from "../../common/BackDrop";
+import { useNavigate } from "react-router-dom";
 
 export default function ServiceListPage() {
     const [open, setOpen] = React.useState(false);
@@ -58,6 +59,13 @@ export default function ServiceListPage() {
     }
 
     useEffect(() => {
+        let token = JSON.parse(localStorage.getItem('token')||'');
+        if(token){
+            instance.defaults.headers.common['Authorization'] = token;
+        }else{
+            let navigation = useNavigate();
+            navigation('/')
+        }
         fetchData();
     }, [data]);
 
