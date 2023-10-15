@@ -71,7 +71,6 @@ export default function PetFilterModal() {
                                                 [
                                                     { label: 'Masculino', value: 'Masculino' },
                                                     { label: 'Feminino', value: 'Feminino' },
-                                                    { label: 'N/A', value: 'N/A' },
                                                 ]
                                             }
                                         />

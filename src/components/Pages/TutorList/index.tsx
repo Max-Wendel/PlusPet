@@ -3,7 +3,7 @@ import "./style.css";
 import BaseTable from "../../common/Table";
 import { createTutorSample, tutorAdapter } from "../../../utils";
 import DashedButton from "../../common/DashedButton";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import BaseInput from "../../common/BaseInput";
 import { Form } from "usetheform";
@@ -13,13 +13,21 @@ import NavigationBar from "../../common/NavigationBar";
 import TutorFilterModal from "../../common/TutorsFilterModal";
 import instance from "../../../axiosConfig";
 import SimpleBackdrop from "../../common/BackDrop";
+import TutorAPI from "../../../api/TutorAPI";
+import {useAppDispatch, useAppSelector, useQuery} from '../../../app/hooks';
+import { selectFilter, selectPagination, selectTutors, setFilter, setPage } from "./ListTutorSlice";
 
-export default function ServiceListPage() {
+export default function TutorListPage() {
+    const dispatch = useAppDispatch();
+    const pagination = useAppSelector(selectPagination);
+    const page = pagination.page;
+    const itensPerPage = pagination.itensPerPage;
     const [open, setOpen] = React.useState(false);
+    const filterAplied = useAppSelector(selectFilter);
+    // const tutorList = useAppSelector(selectTutors);
     const [openSuccessToast, setOpenSuccessToast] = React.useState(false);
     const [openErrorToast, setOpenErrorToast] = React.useState(false);
     const [showLoading, setShowLoading] = React.useState(false);
-    const [data, setData] = React.useState<any>([]);
 
     const openForm = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -32,34 +40,28 @@ export default function ServiceListPage() {
         setOpenErrorToast(false)
     }
 
-    const fetchData = () => {
-        setShowLoading(true);
-        instance.get('/v1/tutor/active')
-            .then((response) => {
-                setData(
-                    response.data.content.map(
-                        (tutor: any) => {
-                            return createTutorSample(
-                                tutor.id,
-                                tutor.name,
-                                tutor.cpf,
-                                tutor.email,
-                                tutor.birthDate,
-                                tutor.archived
-                            )
-                        }
-                    )
-                )
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        setShowLoading(false);
-    }
+    const listTutorApi = TutorAPI.useListActives(page, itensPerPage, "", filterAplied);
 
-    useEffect(() => {
-        fetchData();
-    }, [data]);
+    // const listTutorApi = axios.
+
+    let tutorList = useMemo(() => {
+        if(listTutorApi.isSuccess){
+            return listTutorApi.data?.content;
+        }
+        return [];
+    },[
+        listTutorApi, listTutorApi.data?.content
+    ]);
+
+    // setTutors(tutorListA || []);
+
+    // useEffect(() => {
+    //     setTutors(tutorListA || []);
+    // }, [tutorList])
+
+    // useEffect(){
+    //     setTutors(tutorListA || []);
+    // }
 
     const handleSave = (newTutor: any) => {
         setShowLoading(true);
@@ -201,7 +203,7 @@ export default function ServiceListPage() {
                             <Grid item xs={12} paddingTop={'1%'}>
                                 <Box className="container-item table">
                                     <BaseTable
-                                        rows={data}
+                                        rows={tutorList || []}
                                         type={"tutor"}
                                     />
                                 </Box>

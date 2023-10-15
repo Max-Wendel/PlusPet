@@ -4,7 +4,8 @@ import React from "react";
 import OptionsMenuProps from "./type";
 
 export default function OptionMenu({
-    options
+    options,
+    elementId
 }:OptionsMenuProps
 ) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

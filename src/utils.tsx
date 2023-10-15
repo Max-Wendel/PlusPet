@@ -118,10 +118,10 @@ export const adaptToSelectOption = (label: any, value: any) => {
 export function addressAdapter(address:string):any{
   let longAdress  = address.split(',');
   return {
-    streetName:longAdress[0].trim() || 'Teste', 
+    streetName: longAdress[0] ? longAdress[0].trim() || 'Teste' : 'Teste', 
     cep: 0, 
-    number:longAdress[1].trim() || '-', 
-    district:longAdress[2].trim() || '-', 
+    number: longAdress[1] ? longAdress[1].trim() || '-' : '-', 
+    district: longAdress[2] ? longAdress[2].trim() || '-' : '-', 
     city:'-',
     additionalInformation:'-'
   }

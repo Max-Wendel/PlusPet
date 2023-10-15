@@ -1,5 +1,7 @@
+import Tutor from "../../../model/Tutor";
+
 export default interface BaseTableProps {
-    rows: Array<any>;
+    rows: Array<any | Tutor>;
     type: 'service' | 'pet' | 'tutor';
 }
 

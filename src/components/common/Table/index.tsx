@@ -12,6 +12,7 @@ import TableIcon from '../TableIcon';
 import OptionMenu from '../OptionsMenu';
 import {getFormatedCPF, getGender} from './utils'
 import "./style.css"
+import OptionMenuTutor from '../OptionsMenuTutor';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -104,14 +105,14 @@ export default function BaseTable({
         }
     };
 
-    const getOptionMenu = () => {
+    const getOptionMenu = (id:string) => {
         switch (type) {
-            case 'pet':
-                return (<OptionMenu options={petOptions}/>);
-            case 'service':
-                return (<OptionMenu options={serviceOptions}/>)
-            case 'tutor':
-                    return (<OptionMenu options={tutorOptions}/>)
+            // case 'pet':
+            //     return (<OptionMenu options={petOptions}/>);
+            // case 'service':
+            //     return (<OptionMenu options={serviceOptions}/>)
+            // case 'tutor':
+            //         return (<OptionMenuTutor tutorId={id}/>)
         }
 
     }
@@ -129,7 +130,7 @@ export default function BaseTable({
                         <StyledTableCell align="left">{row.specie}</StyledTableCell>
                         <StyledTableCell align="left">{row.breed}</StyledTableCell>
                         <StyledTableCell align="center">{getGender(row.gender)}</StyledTableCell>
-                        <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell>
+                        {/* <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell> */}
                     </StyledTableRow>
                 );
             case 'service':
@@ -143,18 +144,18 @@ export default function BaseTable({
                         <StyledTableCell align="left">{row.service}</StyledTableCell>
                         <StyledTableCell align="left">{row.status}</StyledTableCell>
                         <StyledTableCell align="center">{row.date}</StyledTableCell>
-                        <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell>
+                        {/* <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell> */}
                     </StyledTableRow>
                 );
             case 'tutor':
                 return (
                     <StyledTableRow key={row.id}>
                         <StyledTableCell component="th" scope="row">
-                            {row.tutor_name}
+                            {row.name}
                         </StyledTableCell>
-                        <StyledTableCell align="center">{getFormatedCPF(row.tutor_cpf)}</StyledTableCell>
-                        <StyledTableCell align="center">{row.tutor_email}</StyledTableCell>
-                        <StyledTableCell align="right">{getOptionMenu()}</StyledTableCell>
+                        <StyledTableCell align="center">{getFormatedCPF(row.cpf)}</StyledTableCell>
+                        <StyledTableCell align="center">{row.email}</StyledTableCell>
+                        {/* <StyledTableCell align="right">{getOptionMenu(row.id)}</StyledTableCell> */}
                     </StyledTableRow>
                 );
         }

@@ -5,18 +5,23 @@ import Pets from "./components/Pages/PetList";
 import Tutors from "./components/Pages/TutorList";
 import Login from "./components/Pages/Login"
 import ErrorPage from "./components/Pages/ErrorPage";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
 
 const AplicationRoutes = () => {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route Component={Services} path="/home" />
-                <Route Component={Login} path="/" />
-                <Route Component={Pets} path="/pets" />
-                <Route Component={Tutors} path="/tutors" />
-                <Route Component={ErrorPage} path="/"/>
-            </Routes>
-        </BrowserRouter>
+        <Provider store = {store}>
+            <BrowserRouter>
+                <Routes>
+                    <Route Component={Login} path="/" />
+                    <Route Component={Services} path="/home" />
+                    <Route Component={Login} path="/" />
+                    <Route Component={Pets} path="/pets" />
+                    <Route Component={Tutors} path="/tutors" />
+                    <Route Component={ErrorPage} path="/"/>
+                </Routes>
+            </BrowserRouter>
+        </Provider>
     )
 }
 

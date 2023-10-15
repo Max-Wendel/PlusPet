@@ -33,7 +33,7 @@ export default function NavigationBar({ children }: NavigationBarProps) {
                 <div className='user-info'>
                   <AccountCircle fontSize='large' sx={{ color: 'black' }} />
                   <Typography variant="caption" sx={{ fontSize: '18px', color: 'black', alignItems: 'flex-start' }}>
-                    Julia Stephanie
+                    BETA Version
                   </Typography>
                 </div>
               </Grid>

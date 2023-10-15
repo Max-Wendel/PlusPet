@@ -4,11 +4,15 @@ import { Alert, Paper, Snackbar, Typography, styled } from '@mui/material';
 import logo from '../../../assets/landscape_logo.svg';
 
 import { Form } from 'usetheform';
-import React from 'react';
+import React, { useState } from 'react';
 import instance from '../../../axiosConfig';
 import LoginInput from '../../common/LoginInput';
 import DashedButton from '../../common/DashedButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { selectUser, setToken } from '../../../slices/UserSlice';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function ServerModal() {
   const LoginForm = styled(Paper)(({ theme }) => ({
@@ -24,23 +28,30 @@ export default function ServerModal() {
 
   const [openToast, setOpenToast] = React.useState(false)
   const [forgotAccess, setForgotAccess] = React.useState(false);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
+  const [loading, setLoading] = useState(false);
+
+  // const { isLoggedIn } = useSelector(state: com => state.auth);
+  // const { message } = useSelector(state => state.message);
 
 
-  async function doLogin(state: any) {
-    instance.post(`/auth/login`,
-      {
-        login: state.login,
-        password: state.password
-      }
-    ).then((response) => {
-      console.log(response);
-      console.log(response.data.token);
-      instance.defaults.headers.common['Authorization'] = response.data.token;
-    }, (error) => {
-      console.log(error);
-      setOpenToast(true)
-    });
-  }
+
+
+  // async function doLogin(state: any) {
+  //   instance.post(`/auth/login`,
+  //     {
+  //       login: state.login,
+  //       password: state.password
+  //     }
+  //   ).then((response) => {
+  //     instance.defaults.headers.common['Authorization'] = response.data.token;
+  //     dispatch(setToken(response.data.token));
+      
+  //   }, (error) => {
+  //     setOpenToast(true)
+  //   });
+  // }
 
   const handleCloseToat = () => {
     setOpenToast(false)
@@ -52,11 +63,36 @@ export default function ServerModal() {
     setForgotAccess(false);
   }
 
-  const onSubmit = async (state: any) => {
-    console.log(state);
-    await doLogin(state);
+  const handleLogin = (e) => {
+    e.preventDefault();
 
+    setLoading(true);
+
+    form.current.validateAll();
+
+    if (checkBtn.current.context._errors.length === 0) {
+      dispatch(login(username, password))
+        .then(() => {
+          navigate("/profile");
+          window.location.reload();
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  };
+
+  if (isLoggedIn) {
+    return <Navigate to="/tutor" />;
   }
+
+  // const onSubmit = async (state: any) => {
+  //   console.log(state);
+  //   await doLogin(state);
+
+  // }
   const required = (value: string) => { value && value.trim() !== "" ? undefined : "Required" };
 
   return (
@@ -71,7 +107,7 @@ export default function ServerModal() {
       </Box>
 
       <LoginForm className='form' elevation={10}>
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={handleLogin}>
           <div className='logo-div'>
             <img className='logo' src={logo} alt='Logo'></img>
           </div>

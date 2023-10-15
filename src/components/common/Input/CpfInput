@@ -1,0 +1,64 @@
+// import React, { ChangeEvent } from 'react';
+// import MaskedInput, { MaskedInputProps } from 'react-text-mask';
+
+// const cpfMask = [
+//   /\d/,
+//   /\d/,
+//   /\d/,
+//   '.',
+//   /\d/,
+//   /\d/,
+//   /\d/,
+//   '.',
+//   /\d/,
+//   /\d/,
+//   /\d/,
+//   '-',
+//   /\d/,
+//   /\d/
+// ];
+// const cnpjMask = [
+//   /\d/,
+//   /\d/,
+//   '.',
+//   /\d/,
+//   /\d/,
+//   /\d/,
+//   '.',
+//   /\d/,
+//   /\d/,
+//   /\d/,
+//   '/',
+//   /\d/,
+//   /\d/,
+//   /\d/,
+//   /\d/,
+//   '-',
+//   /\d/,
+//   /\d/
+// ];
+
+// const removeMask = (value: string): string =>
+//   value.replace(/\D+/g, '');
+
+
+// const mask = (value: string) =>
+//   removeMask(value).length <= 11 ? cpfMask : cnpjMask;
+
+// const cleanEventValue = (event: ChangeEvent<HTMLInputElement>) => ({
+//   ...event,
+//   target: { ...event.target, value: removeMask(event.target.value) }
+// });
+
+// // const CpfCnpjInput = (props: Partial<MaskedInputProps>) => (
+// //   <MaskedInput
+// //     {...props}
+// //     mask={mask}
+// //     placeholderChar={'\u2000'}
+// //     // onChange={(event) =>
+// //     //   props.onChange && props.onChange(cleanEventValue(event))
+// //     // }
+// //   />
+// // );
+
+// export default CpfCnpjInput;
