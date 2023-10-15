@@ -1,28 +1,53 @@
-import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Box, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import BaseInput from "../BaseInput";
 import BasicButton from "../BasicButton";
 import './style.css';
 import { Form } from "usetheform";
 import ClearButton from "../ClearButton";
 import BaseSelect from "../BaseSelect";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { selectFilter, setFilter, setPage } from "../../Pages/PetList/PetSlice";
+import PetFilter from "../../../model/PETFilter";
+import { useEffect, useState } from "react";
 
 export default function PetFilterModal() {
 
-    const applyFilters = (state: any) => {
-        console.log(state)
+    const dispatch = useAppDispatch();
+    const apliedFilter = useAppSelector(selectFilter);
+    const [filterToAply, setFilterToAply] = useState<PetFilter>({});
+
+    const setFilterNameToAply = (name?: string) => {
+        setFilterToAply((prev) => ({ ...prev, name: name}));
+    }
+    const setFilterTutorToAply = (tutorName?: string) => {
+        setFilterToAply((prev) => ({ ...prev, tutorName: tutorName}));
+    }
+    const setFilterGenderToAply = (gender?: string) => {
+        setFilterToAply((prev) => ({ ...prev, gender: gender}));
     }
 
-    const handleApplyFilterClick = () => {
-        console.log('APLICADO')
+    const setFilterSpiecesToAply = (spieces?: string) => {
+        setFilterToAply((prev) => ({ ...prev, spieces: spieces}));
     }
+
+    const handleClearFilter = ()=>{
+        dispatch(setPage(0));
+        dispatch(setFilter({}));
+    }
+
+    const handleApplyFilterClick = ()=>{
+        dispatch(setPage(0));
+        dispatch(setFilter(filterToAply));
+    }
+
+    useEffect(() => {
+        setFilterToAply(apliedFilter);
+    }, [apliedFilter])
 
     return (
         <Box sx={{ minWidth: '100%' }}>
             <Box sx={{ minHeight: '15vh', backgroundColor: '#7AE4C4', borderRadius: '10px' }}>
                 <Paper sx={{ width: '99.5%', height: '15vh', borderRadius: '10px', paddingLeft: '1%', paddingRight: '0.5%', float: 'right' }} elevation={1}>
-                    <Form
-                        onSubmit={applyFilters}
-                    >
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
                                 <Typography align="left" variant="h5">Filtrar Pets</Typography>
@@ -31,24 +56,24 @@ export default function PetFilterModal() {
                             <Grid item xs={12} >
                                 <Grid container spacing={3}>
                                     <Grid item xs={3} sm={4}>
-                                        <BaseInput
-                                            placeholder="Nome do Pet"
-                                            name="pet_name"
-                                            id="pet-name-filter-input"
-                                            size={"small"}
-                                            variant={"outlined"}
-                                        />
+                                        <TextField
+                                            value={filterToAply.name || ''}
+                                            placeholder="Nome do Pet" 
+                                            size="small"
+                                            fullWidth
+                                            onChange={(ev) => setFilterNameToAply(ev.target.value.length > 0 ? ev.target.value : undefined)}>
+                                        </TextField>
                                     </Grid>
                                     <Grid item xs={3} sm={4}>
-                                        <BaseInput
-                                            placeholder="Nome do Tutor"
-                                            name="tutor_name"
-                                            id="tutor-name-filter-input"
-                                            size={"small"}
-                                            variant={"outlined"}
-                                        />
+                                        <TextField
+                                            value={filterToAply.tutorName || ''}
+                                            placeholder="Nome do Tutor" 
+                                            size="small"
+                                            fullWidth
+                                            onChange={(ev) => setFilterTutorToAply(ev.target.value.length > 0 ? ev.target.value : undefined)}>
+                                        </TextField>
                                     </Grid>
-                                    <Grid item xs={2}>
+                                    {/* <Grid item xs={2}>
                                         <BaseSelect
                                             name="specie"
                                             placeholder="Espécie"
@@ -60,9 +85,9 @@ export default function PetFilterModal() {
                                                     { label: 'Outros', value: 'Outros' },
                                                 ]
                                             }
-                                        />
-                                    </Grid>
-                                    <Grid item xs={2}>
+                                        /> 
+                                    </Grid>*/}
+                                    {/* <Grid item xs={2}>
                                         <BaseSelect
                                             name="gender"
                                             placeholder="Sexo do Pet"
@@ -74,21 +99,28 @@ export default function PetFilterModal() {
                                                 ]
                                             }
                                         />
-                                    </Grid>
+                                    </Grid> */}
                                 </Grid>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2} justifyContent={'flex-end'} alignItems={'center'} paddingRight={'10px'} paddingTop={'10px'}>
                                     <Grid item xs={2}>
-                                        <ClearButton label="LIMPAR FILTROS" />
+                                        <BasicButton
+                                            variant={"contained"}
+                                            disabled={!(filterToAply.name != null || filterToAply.tutorName != null || filterToAply.gender != null || filterToAply.spieces != null)}
+                                            onClick={() => handleClearFilter()}
+                                            sx={{ borderBottomColor: '#FC8C19', backgroundColor: 'transparent', border: '1px solid #FC8C19', color: 'black', fontWeight: 'bolder', maxHeight:'40px' }}
+                                        >
+                                            LIMPAR FILTROS
+                                        </BasicButton>
                                     </Grid>
                                     <Grid item xs={2} >
                                         <BasicButton
                                             variant={"contained"}
                                             disabled={false}
                                             type="submit"
-                                            onClick={handleApplyFilterClick}
-                                            sx={{ backgroundColor: '#FC8C19', color: 'black', fontWeight: 'bolder' }}
+                                            onClick={() => handleApplyFilterClick()}
+                                            sx={{ backgroundColor: '#FC8C19', color: 'black', fontWeight: 'bolder', maxHeight:'40px' }}
                                         >
                                             Aplicar Filtros
                                         </BasicButton>
@@ -96,7 +128,6 @@ export default function PetFilterModal() {
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Form>
                 </Paper>
             </Box>
         </Box>
