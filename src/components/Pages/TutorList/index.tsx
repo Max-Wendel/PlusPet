@@ -25,7 +25,6 @@ export default function TutorListPage() {
     const itensPerPage = pagination.itensPerPage;
     const [open, setOpen] = React.useState(false);
     const filterAplied = useAppSelector(selectFilter);
-    // const tutorList = useAppSelector(selectTutors);
     const [openSuccessToast, setOpenSuccessToast] = React.useState(false);
     const [openErrorToast, setOpenErrorToast] = React.useState(false);
     const [showLoading, setShowLoading] = React.useState(false);
@@ -53,16 +52,6 @@ export default function TutorListPage() {
         listTutorApi, listTutorApi.data?.content
     ]);
 
-    // setTutors(tutorListA || []);
-
-    // useEffect(() => {
-    //     setTutors(tutorListA || []);
-    // }, [tutorList])
-
-    // useEffect(){
-    //     setTutors(tutorListA || []);
-    // }
-
     useEffect(() => {
         let token = JSON.parse(localStorage.getItem('token')||'');
         if(token){
@@ -71,7 +60,6 @@ export default function TutorListPage() {
             let navigation = useNavigate();
             navigation('/')
         }
-        //fetchData();
     }, [dispatch]);
 
     const handleSave = (newTutor: any) => {

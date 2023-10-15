@@ -47,10 +47,6 @@ export const ListTutorSlice = createSlice({
         setItensPerPage: (state, {payload}: PayloadAction<number>) =>{
             state.pagination.itensPerPage = payload;
         }
-        // ,
-        // setTutors: (state, {payload}: PayloadAction<Tutor[]>) => {
-        //     state.tutors = payload;
-        // }
     }
 });
 
@@ -69,11 +65,5 @@ export const {
 export const selectFilter = (state: RootState) => state.listActiveTutors.filter;
 export const selectPagination = (state: RootState) => state.listActiveTutors.pagination;
 export const selectTutors = (state:RootState) => state.listActiveTutors.tutors;
-// export const getTutors = createAsyncThunk (
-//     'getTutors',
-//     (_, {getState}) => {
-//         let filterPage = (getState as unknown as RootState);
-//         return TutorAPI.useListActives( filterPage.listActiveTutors.pagination.page, filterPage.listActiveTutors.pagination.itensPerPage, '', filterPage.listActiveTutors.filter)}
-// );
 
 export default ListTutorSlice.reducer;

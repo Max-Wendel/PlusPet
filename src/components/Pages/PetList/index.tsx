@@ -3,7 +3,7 @@ import "./style.css";
 import BaseTable from "../../common/Table";
 import { adaptToSelectOption, petRowsSample, tutorOptionsSample } from "../../../utils";
 import DashedButton from "../../common/DashedButton";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import BaseInput from "../../common/BaseInput";
 import { Form } from "usetheform";
@@ -12,6 +12,11 @@ import BaseSelect from "../../common/BaseSelect";
 import BasicButton from "../../common/BasicButton";
 import NavigationBar from "../../common/NavigationBar";
 import PetFilterModal from "../../common/PetsFilterModal";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { selectFilter, selectPagination } from "./PetSlice";
+import PetAPI from "../../../api/PetAPI";
+import instance from "../../../axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 export default function ServiceListPage() {
     const [open, setOpen] = React.useState(false);
@@ -25,6 +30,46 @@ export default function ServiceListPage() {
 
         return response.map((option) => { return adaptToSelectOption(option.pet_tutor, option.id) });
     }
+
+    const dispatch = useAppDispatch();
+    const pagination = useAppSelector(selectPagination);
+    const page = pagination.page;
+    const itensPerPage = pagination.itensPerPage;
+    const filterAplied = useAppSelector(selectFilter);
+    const [openSuccessToast, setOpenSuccessToast] = React.useState(false);
+    const [openErrorToast, setOpenErrorToast] = React.useState(false);
+    const [showLoading, setShowLoading] = React.useState(false);
+
+
+    const handleCloseSuccessToast = () => {
+        setOpenSuccessToast(false)
+    }
+
+    const handleCloseErrorToast = () => {
+        setOpenErrorToast(false)
+    }
+
+    const listPetApi = PetAPI.useListActives(page, itensPerPage, "", filterAplied);
+    // const listTutorApi = axios.
+
+    let petList = useMemo(() => {
+        if(listPetApi.isSuccess){
+            return listPetApi.data?.content;
+        }
+        return [];
+    },[
+        listPetApi, listPetApi.data?.content
+    ]);
+
+    useEffect(() => {
+        let token = JSON.parse(localStorage.getItem('token')||'');
+        if(token){
+            instance.defaults.headers.common['Authorization'] = token;
+        }else{
+            let navigation = useNavigate();
+            navigation('/')
+        }
+    }, [dispatch]);
 
     const data2 = getTutorOptions();
 
@@ -173,7 +218,7 @@ export default function ServiceListPage() {
                         <Grid item xs={12} paddingTop={'1%'}>
                             <Box className="container-item table">
                                 <BaseTable
-                                    rows={petRowsSample}
+                                    rows={petList || []}
                                     type={"pet"}
                                 />
                             </Box>

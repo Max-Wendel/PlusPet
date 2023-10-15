@@ -125,8 +125,8 @@ export default function BaseTable({
                         <StyledTableCell component="th" scope="row">
                             {getIcon(row)}
                         </StyledTableCell>
-                        <StyledTableCell align='left'>{row.pet_name}</StyledTableCell>
-                        <StyledTableCell align="left">{row.pet_tutor}</StyledTableCell>
+                        <StyledTableCell align='left'>{row.name}</StyledTableCell>
+                        <StyledTableCell align="left">{row.tutor.name}</StyledTableCell>
                         <StyledTableCell align="left">{row.specie}</StyledTableCell>
                         <StyledTableCell align="left">{row.breed}</StyledTableCell>
                         <StyledTableCell align="center">{getGender(row.gender)}</StyledTableCell>
