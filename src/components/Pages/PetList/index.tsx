@@ -8,7 +8,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import BaseInput from "../../common/BaseInput";
 import { Form } from "usetheform";
 import DateField from "../../common/DateField";
-import BaseSelect from "../../common/BaseSelect";
 import BasicButton from "../../common/BasicButton";
 import NavigationBar from "../../common/NavigationBar";
 import PetFilterModal from "../../common/PetsFilterModal";
@@ -18,6 +17,7 @@ import PetAPI from "../../../api/PetAPI";
 import instance from "../../../axiosConfig";
 import { useNavigate } from "react-router-dom";
 import SimpleBackdrop from "../../common/BackDrop";
+import SelectForm from "../../SelectForm";
 
 export default function ServiceListPage() {
     const [open, setOpen] = React.useState(false);
@@ -93,9 +93,9 @@ export default function ServiceListPage() {
              name: state.pet_name,
              tutor: { id: state.pet_tutor.value },
              birthDate: state.birth_date || '',
-             gender: state.gender.value || 'Masculino',
+             gender: state.gender? state.gender.value : 'Masculino',
              breed:  state.pet_breed || 'RND',
-             spieces: state.specie.value || '-'
+             spieces: state.specie? state.specie.value : '-'
             }
         )
         .then(()=>{
@@ -146,11 +146,11 @@ export default function ServiceListPage() {
                                         </Box>
                                         <Box className="formItem">
                                             <InputLabel sx={{ textAlign: 'start' }}>Nome do Tutor</InputLabel>
-                                            <BaseSelect name={"pet_tutor"} isInputStyle placeholder={"Nome do Tutor"} options={petTutors} />
+                                            <SelectForm name={"pet_tutor"} isInputStyle placeholder={"Nome do Tutor"} options={petTutors} />
                                         </Box>
                                         <Box className="formItem">
                                             <InputLabel sx={{ textAlign: 'start' }}>Espécie</InputLabel>
-                                            <BaseSelect
+                                            <SelectForm
                                                 name={"specie"}
                                                 isInputStyle
                                                 options={
@@ -165,7 +165,7 @@ export default function ServiceListPage() {
                                         </Box>
                                         <Box className="formItem select">
                                             <InputLabel sx={{ textAlign: 'start' }}>Sexo do animal</InputLabel>
-                                            <BaseSelect
+                                            <SelectForm
                                                 name={"gender"}
                                                 isInputStyle
                                                 options={
